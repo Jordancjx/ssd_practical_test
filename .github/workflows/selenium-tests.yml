@@ -65,9 +65,7 @@ jobs:
 
       - name: Extract artifacts
         run: |
-          mkdir -p humblehome/frontend
-          tar -xzvf www-build.tar.gz -C humblehome/frontend
-          ls -l humblehome/frontend
+          tar -xzvf www-build.tar.gz
 
       - name: Install dependencies
         run: npm install
