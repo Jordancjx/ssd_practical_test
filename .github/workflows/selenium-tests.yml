@@ -29,7 +29,7 @@ jobs:
       - name: Prepare artifacts
         run: |
           ls 
-          tar -czvf ../../www-build.tar.gz ./package.json ./src ./tests
+          tar -czvf www-build.tar.gz package.json src tests
           ls -l
 
       - name: Upload artifacts
