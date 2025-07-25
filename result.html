@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Search Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Result</h1>
+  <p id="displayTerm"></p>
+  <button id="backBtn">Back</button>
+
+  <script>
+    // Function to get query params
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const displayTerm = document.getElementById('displayTerm');
+    const backBtn = document.getElementById('backBtn');
+
+    const searchTerm = getQueryParam('search') || '';
+
+    // Just display the term safely (since we controlled input on previous page)
+    displayTerm.textContent = `You searched for: ${searchTerm}`;
+
+    backBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

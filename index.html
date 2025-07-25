@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Search Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 70%;
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Page</h1>
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Enter search term" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+
+    function isValidSearchTerm(term) {
+      const regex = /^[a-zA-Z0-9 _-]+$/;
+      return regex.test(term);
+    }
+
+    function containsSQLInjection(term) {
+      const sqlPatterns = [
+        /(\b)(OR|AND)(\b)/i,
+        /--/,
+        /;/,
+        /'/,
+        /"/,
+        /\/\*/,
+        /\*\//
+      ];
+      return sqlPatterns.some(pattern => pattern.test(term));
+    }
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const searchTerm = input.value.trim();
+
+      if (!isValidSearchTerm(searchTerm)) {
+        alert('Invalid search term! Only letters, numbers, spaces, underscores, and dashes are allowed.');
+        input.value = '';
+        return;
+      }
+
+      if (containsSQLInjection(searchTerm)) {
+        alert('Input contains disallowed SQL keywords or characters. Please enter a valid search term.');
+        input.value = '';
+        return;
+      }
+
+      // Valid input — go to result page with search term in URL query string
+      const encodedTerm = encodeURIComponent(searchTerm);
+      window.location.href = `result.html?search=${encodedTerm}`;
+    });
+  </script>
+</body>
+</html>
