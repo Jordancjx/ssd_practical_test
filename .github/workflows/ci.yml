@@ -1,0 +1,43 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: npm run lint  # assuming you have a lint script
+
+    - name: Start web server
+      run: |
+        npm run build
+        npx http-server ./build -p 8080 &
+      # background server to serve your React app
+
+    - name: Wait for server
+      uses: jakejarvis/wait-action@v0.1.6
+      with:
+        url: http://localhost:8080
+        timeout: 15
+
+    - name: Run Cypress tests
+      run: npx cypress run --config baseUrl=http://localhost:8080
