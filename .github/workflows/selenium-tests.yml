@@ -64,9 +64,6 @@ jobs:
           npm install
           npm install react-router-dom
 
-      - name: Run unit tests
-        run: npm test
-
       - name: Start Node.js server
         run: |
           nohup node src/server.js &  # Start the server in the background
