@@ -56,7 +56,9 @@ jobs:
         run: ls -ltra
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install react-router-dom
 
       - name: Run unit tests
         run: npm test
