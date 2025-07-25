@@ -55,6 +55,10 @@ jobs:
       - name: List files for debugging
         run: ls -ltra
 
+      - name: Install React-router
+        run: |
+          npm install react-router-dom
+
       - name: Install dependencies
         run: |
           npm install
